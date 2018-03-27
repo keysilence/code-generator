@@ -1,0 +1,121 @@
+package ${class.packageName}.web;
+
+import com.google.common.base.Strings;
+import ${class.packageName}.domain.${class.className};
+import ${class.packageName}.common.page.Page;
+import ${class.packageName}.common.Constants;
+import ${class.packageName}.service.${class.className}Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
+
+@Controller
+@RequestMapping(value = "/admin/${class.classNameLower}", method = {RequestMethod.GET, RequestMethod.POST})
+public class ${class.className}Controller {
+
+    private static final Logger logger = LoggerFactory.getLogger(${class.className}Controller.class);
+
+    @Autowired
+    private ${class.className}Service ${class.classNameLower}Service;
+
+    private static Integer pageSize = 15;
+
+    @RequestMapping(value = "/edit", method = {RequestMethod.GET})
+    public String edit(@RequestParam(value = "id", defaultValue = "0") Long id, Model view) {
+
+        try {
+            ${class.className} ${class.classNameLower} = null;
+            if (id != null && id.longValue() > 0) {
+                ${class.classNameLower} = ${class.classNameLower}Service.query${class.className}ById(id);
+            } else {
+                ${class.classNameLower} = new ${class.className}();
+            }
+            view.addAttribute("${class.classNameLower}", ${class.classNameLower});
+
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+        return "admin/${class.classNameLower}/edit";
+
+    }
+
+    @RequestMapping(value = "/view", method = {RequestMethod.GET})
+    public String view(@RequestParam(value = "id", defaultValue = "0") Long id, Model view) {
+
+        try {
+            ${class.className} ${class.classNameLower} = null;
+            if (id != null && id.longValue() > 0) {
+                ${class.classNameLower} = ${class.classNameLower}Service.query${class.className}ById(id);
+            } else {
+                ${class.classNameLower} = new ${class.className}();
+            }
+            view.addAttribute("${class.classNameLower}", ${class.classNameLower});
+
+        } catch (Exception e) {
+                logger.error(e.getMessage(), e);
+        }
+        return "admin/${class.classNameLower}/view";
+
+    }
+
+    @RequestMapping(value = "/delete", method = {RequestMethod.DELETE})
+    @ResponseBody
+    public String delete(@RequestParam(value = "id", defaultValue = "0") Long id, Model view) {
+
+        try {
+
+            long rows = ${class.classNameLower}Service.delete${class.className}(id);
+
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+        return String.format(Constants.WEB_IFRAME_SCRIPT, "删除成功！");
+
+    }
+
+    @RequestMapping(value = "/save", method = {RequestMethod.POST})
+    @ResponseBody
+    public String save(${class.className} ${class.classNameLower}, Model view) {
+
+        try {
+
+            long rows = ${class.classNameLower}Service.save${class.className}(${class.classNameLower});
+            view.addAttribute("${class.classNameLower}", ${class.classNameLower});
+
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+        return String.format(Constants.WEB_IFRAME_SCRIPT, "保存成功！");
+
+    }
+
+    @RequestMapping(value = "/list", method = {RequestMethod.GET, RequestMethod.POST})
+    public String list(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "id", required = false) Long id, Model view) {
+
+        try {
+            //查询
+            Map<String, Object> search = new HashMap<String, Object>();
+            if (id != null) {
+                search.put("id", id);
+            }
+
+            Page<${class.className}> pageData = ${class.classNameLower}Service.query${class.className}Page(page, pageSize,search);
+            //放入page对象。
+            view.addAttribute("pageData", pageData);
+            view.addAttribute("id", id);
+
+
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+        return "admin/${class.classNameLower}/list";
+
+    }
+
+}

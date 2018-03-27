@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body class="no-skin">
+
+
+
+<div class="main-container ace-save-state" id="main-container">
+    <script type="text/javascript">
+        try{ace.settings.loadState('main-container')}catch(e){}
+    </script>
+
+
+
+    <div class="main-content">
+        <div class="main-content-inner">
+
+            <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="ace-icon fa fa-home home-icon"></i>
+                        <a href="#">首页</a>
+                    </li>
+                    <li class="active">${class.className}管理</li>
+                </ul><!-- /.breadcrumb -->
+            </div>
+
+            <div class="page-content">
+                <div class="page-header">
+                    <h1>
+                        ${class.className}列表
+                    </h1>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="col-sm-1">
+                                <button onclick="showEditWindow(0);" role="button" class="btn btn-sm btn-primary" data-toggle="modal">
+                                    <i class="ace-icon fa fa-plus"></i>
+                                    增加
+                                </button>
+                        </div><!-- /.col -->
+                        <div class="col-sm-3">
+                            <form action="/admin/${class.classNameLower}/list" id="search-from" method="get">
+                                #foreach($column in $table.columns)
+                                    #if ($column.name != "id")
+
+                                <input type="text" name="$column.name" placeholder="$column.annotation" class="col-xs-10 col-sm-3" value="$!{$column.name}">
+
+                                    #end
+                                #end
+
+                                <button onclick="$('#search-from').submit();" role="button" class="btn btn-sm btn-primary" data-toggle="modal">
+                                    <i class="ace-icon fa fa-search"></i>
+                                    查询
+                                </button>
+                            </form>
+                        </div><!-- /.col -->
+
+                        <p class="row">&nbsp;</p>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <table id="simple-table" class="table  table-bordered table-hover">
+                                    <tr>
+                                        #foreach($column in $table.columns)
+                                            #if ($column.name != "id")
+
+                                        <th>$column.annotation</th>
+
+                                            #end
+                                        #end
+
+                                        <th>操作</th>
+                                    </tr>
+
+                                    #foreach(${item} in $!{pageData.result})
+                                    <tr>
+
+                                        #foreach($column in $table.columns)
+                                        #if ($column.name != "id")
+
+                                        $column.tdColName
+
+                                        #end
+                                        #end
+
+                                        <td>
+                                            <div class="hidden-sm hidden-xs btn-group">
+                                                <button class="btn btn-xs btn-info" onclick="showEditWindow('${item.id}');">
+                                                    <i class="ace-icon fa fa-pencil bigger-120"></i>
+                                                </button>
+                                                <button class="btn btn-xs btn-danger" onclick="deleteConfirm('${item.id}');">
+                                                    <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    #end
+
+                                </table>
+                            </div><!-- /.span -->
+                        </div><!-- /.row -->
+                        <!-- PAGE CONTENT BEGINS -->
+
+                        #if($!pageData.totalCount > 0)
+                        <!-- 分页栏 -->
+                        #showPage($!{pageData},"/admin/${class.classNameLower}/list?")
+                        #end
+
+                    </div><!-- /.row -->
+                </div><!-- /.page-content -->
+            </div>
+
+        </div>
+    </div><!-- /.main-content -->
+
+
+
+    <script type="text/javascript">
+        //每次动态加载
+        function showEditWindow(id) {
+            $('#my-modal').context = $("#my-modal").load('/admin/${class.classNameLower}/edit?id=' + id);
+            $('#my-modal').modal('show');
+        }
+
+        function deleteConfirm(id){
+            bootbox.confirm("确认删除？",
+                function(result) {
+                    if(result) {
+                        $.post("/admin/${class.classNameLower}/delete", {"id":id},
+                            function(data){window.location.reload();}
+                        );
+                    }
+                });
+        }
+    </script>
+</div><!-- /.main-container -->
+
+</body>
+</html>

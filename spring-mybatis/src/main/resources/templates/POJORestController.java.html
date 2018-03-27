@@ -1,0 +1,153 @@
+package ${class.packageName}.web;
+
+import com.google.common.base.Strings;
+import ${class.packageName}.domain.${class.className};
+import ${class.packageName}.common.page.Page;
+import ${class.packageName}.common.Constants;
+import ${class.packageName}.common.ResultJson;
+import ${class.packageName}.common.ResultPageJson;
+import ${class.packageName}.service.${class.className}Service;
+import io.swagger.annotations.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
+import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+
+
+@Api(tags = "09,${class.className}相关接口")
+@RestController
+@RequestMapping(value = "/${class.classNameLower}")
+public class ${class.className}RestController {
+
+    private static final Logger logger = LoggerFactory.getLogger(${class.className}RestController.class);
+
+    @Autowired
+    private ${class.className}Service ${class.classNameLower}Service;
+
+    public class ${class.className}Response {//对象返回
+        @ApiModelProperty(position = 1)
+        public int code;
+        @ApiModelProperty(position = 2)
+        public String message;
+        @ApiModelProperty(position = 3)
+        public ${class.className} data;
+    }
+
+    public class ${class.className}ListResponse {//数组返回
+        @ApiModelProperty(position = 1)
+        public int code;
+        @ApiModelProperty(position = 2)
+        public String message;
+        @ApiModelProperty(position = 3)
+        public List<${class.className}> data;
+        @ApiModelProperty(position = 4)
+        public int totalCount;
+        @ApiModelProperty(position = 5)
+        public int pageCount;
+        @ApiModelProperty(position = 6)
+        public int currentPage;
+    }
+
+    private static Integer pageSize = 15;
+
+    @ApiOperation(value = "按Id查询", notes = "", response = ${class.className}Response.class,
+        authorizations = {@Authorization(value = "UserToken"), @Authorization(value = "DeviceToken")})
+    @ResponseBody
+    @RequestMapping(value = "/get", method = {RequestMethod.GET})
+    public Object get(@RequestParam(value = "id", defaultValue = "0") Long id,
+                       Model view) {
+        ${class.className} ${class.classNameLower} = null;
+        try {
+            if (id != null && id.longValue() > 0) {
+                ${class.classNameLower} = ${class.classNameLower}Service.query${class.className}ById(id);
+            }else{
+                ${class.classNameLower} = new ${class.className}();
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            return Constants.getErrorMsg(e.getMessage());
+        }
+        return new ResultJson().setData(${class.classNameLower});
+    }
+
+    @ApiOperation(value = "按Id删除", notes = "", response = ResultJson.class,
+        authorizations = {@Authorization(value = "UserToken"), @Authorization(value = "DeviceToken")})
+    @ResponseBody
+    @RequestMapping(value = "/delete", method = {RequestMethod.DELETE})
+    public Object delete(@RequestParam(value = "id", defaultValue = "0") Long id) {
+        try {
+
+            long rows = ${class.classNameLower}Service.delete${class.className}(id);
+
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            return Constants.getErrorMsg(e.getMessage());
+        }
+        return Constants.getSuccessMsg();
+    }
+
+    @ApiOperation(value = "保存数据", notes = "", response = ${class.className}Response.class,
+        authorizations = {@Authorization(value = "UserToken"), @Authorization(value = "DeviceToken")})
+    @ResponseBody
+    @RequestMapping(value = "/save", method = {RequestMethod.POST})
+    public Object save(
+            #foreach($column in $table.columns)
+            #if ($column.name != "id")
+
+            @ApiParam(value = "$column.annotation", required = true) @RequestParam(value = "$column.name", defaultValue = "") $column.type $column.name #if (!$column.last),#end
+            #end
+            #end
+
+            }}) {
+
+        try {
+            ${class.className} ${class.classNameLower} = new ${class.className}();
+            #foreach($column in $table.columns)
+
+            ${class.classNameLower}.set$column.nameUpper($column.name);
+            #end
+
+            long rows = ${class.classNameLower}Service.save${class.className}(${class.classNameLower});
+
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            return Constants.getErrorMsg(e.getMessage());
+        }
+        return Constants.getSuccessMsg();
+    }
+
+    @ApiOperation(value = "查询list", notes = "", response = ${class.className}ListResponse.class,
+        authorizations = {@Authorization(value = "UserToken"), @Authorization(value = "DeviceToken")})
+    @ResponseBody
+    @RequestMapping(value = "/list", method = {RequestMethod.GET})
+    public Object list(@RequestParam(value = "page", defaultValue = "0") int page,
+                       @RequestParam(value = "id", required = false) Long id) {
+        Page<${class.className}> pageData = null;
+        try {
+            //查询
+            Map<String, Object> search = new HashMap<String, Object>();
+            if (id != null) {
+                search.put("id", id);
+            }
+            pageData = ${class.classNameLower}Service.query${class.className}Page(page, pageSize,search);
+            //放入page对象。
+            return new ResultPageJson()
+                    .setData(pageData.getResult())
+                    .setTotalCount(pageData.getTotalCount())
+                    .setCurrentPage(pageData.getCurrentPage())
+                    .setPageCount(pageData.getPageCount());
+
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            return Constants.getErrorMsg(e.getMessage());
+        }
+    }
+
+}

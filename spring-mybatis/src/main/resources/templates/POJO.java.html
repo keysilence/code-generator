@@ -1,0 +1,24 @@
+package ${class.packageName}.domain;
+
+/**
+*
+*/
+public class ${class.className} {
+
+    private static final long serialVersionUID = 1L;
+
+    #foreach($column in $table.columns)
+private $column.type $column.name;//$column.annotation
+    #end
+    #foreach($column in $table.columns)
+
+    public $column.type get$column.nameUpper () {
+        return this.$column.name;
+    }
+
+    public void set$column.nameUpper ($column.type $column.name) {
+        this.$column.name = $column.name;
+    }
+    #end
+
+}

@@ -1,0 +1,23 @@
+package ${class.packageName}.dao;
+
+import ${class.packageName}.domain.${class.className};
+import java.util.List;
+import java.util.Map;
+
+public interface ${class.className}Mapper {
+
+    public long save(${class.className} ${class.classNameLower});
+
+    public long update(${class.className} ${class.classNameLower});
+
+    public long delete(Long id);
+
+    public List<${class.className}> selectList(Map<String, Object> params);
+
+    public Integer selectListCount(Map<String, Object> params);
+
+    public ${class.className} selectById(Long id);
+
+    public List<${class.className}> selectByBatchIds(Map<String, Object> params);
+
+}

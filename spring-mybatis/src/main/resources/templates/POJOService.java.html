@@ -1,0 +1,20 @@
+package ${class.packageName}.service;
+
+import ${class.packageName}.domain.${class.className};
+import ${class.packageName}.common.page.Page;
+import java.util.Map;
+import java.util.List;
+
+public interface ${class.className}Service {
+
+    public Page<${class.className}> query${class.className}Page(Integer currentPage, Integer pageSize, Map<String, Object> search);
+
+    public ${class.className} query${class.className}ById(Long id);
+
+    public List<${class.className}> query${class.className}(Map<String, Object> params);
+
+    public long delete${class.className}(Long id);
+
+    public long save${class.className}(${class.className} ${class.classNameLower});
+
+}
