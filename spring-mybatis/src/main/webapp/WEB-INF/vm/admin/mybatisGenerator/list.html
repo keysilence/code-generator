@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    #parse("common/meta.html")
+</head>
+<body class="no-skin">
+
+#parse("common/header.html")
+
+<div class="main-container ace-save-state" id="main-container">
+    <script type="text/javascript">
+        try{ace.settings.loadState('main-container')}catch(e){}
+    </script>
+
+    #parse("common/left_menu.html")
+
+    <div class="main-content">
+        <div class="main-content-inner">
+
+            <div class="page-content">
+                <div class="page-header">
+                    <h1>
+                        代码生成工具 v1.0.0
+                    </h1>
+                </div>
+
+                <div class="row">
+
+                    <div class="modal-header">
+                        <h3 class="smaller lighter blue no-margin">sql语句例子：</h3>
+                    </div>
+
+                    <div class="modal-body">
+                        <figure class="highlight"><pre>
+CREATE TABLE `user_info` (
+  `id` bigint(20) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `name` varchar(200) NOT NULL,
+  `password` varchar(200) NOT NULL,
+  `status` tinyint(1) NOT NULL ,
+  `type` tinyint(1) NOT NULL ,
+  `create_time` datetime NOT NULL,
+  `update_time` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ;
+</pre></figure>
+                    </div>
+
+                    <div class="modal-header">
+                        <h3 class="smaller lighter blue no-margin">生成代码，请输入一个创建表的sql(不包括库名，主键，索引，注释)。</h3>
+                    </div>
+
+                    <div class="modal-body">
+                        <form class="form-horizontal" action="/admin/mybatisGenerator/edit" id="parseForm" role="form" method="post">
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                        <textarea class="form-control" style="height: 200px;" name="sql" placeholder="CREATE TABLE `user_info` (
+  `id` bigint(20) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `name` varchar(200) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ;"></textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer" style="background-color: white">
+                                <button class="btn btn-sm btn-primary" type="button" onclick="document.getElementById('parseForm').submit()">
+                                    <i class="ace-icon fa fa-check"></i>
+                                    生成代码
+                                </button>
+                            </div>
+                            <input type="hidden" name="Type" value=""/>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <p class="row">&nbsp;</p>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <table id="simple-table" class="table  table-bordered table-hover">
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>文件名</th>
+                                        <!--<th>创建时间</th>-->
+                                        <th>下载文件</th>
+                                    </tr>
+                                    {{ $TmpType := .Type }}
+                                    {{range $index, $file := .TempFileList}}
+                                    <tr>
+                                        <td>{{$file.Index}}</td>
+                                        <td>{{$file.GenName}} </td>
+                                        <!--<td>{date .UpdateTime "2006-01-02 15:04:05"}</td>-->
+                                        <td>
+                                            <div class="hidden-sm hidden-xs btn-group">
+                                                <a class="btn btn-xs  btn-info" target="_blank"
+                                                   href='/admin/gen/download?Type={{$TmpType}}&Name={{$file.Name}}&GenName={{$file.GenName}}'>
+                                                    <i class="ace-icon fa fa-download bigger-120"></i>
+                                                </a>
+                                                <a class="btn btn-xs btn-info" target="_blank"
+                                                   href='/admin/gen/view?Type={{$TmpType}}&Name={{$file.Name}}&GenName={{$file.GenName}}'>
+                                                    <i class="ace-icon fa fa-pencil bigger-120"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {{end}}
+                                </table>
+                            </div><!-- /.span -->
+                        </div><!-- /.row -->
+                        <!-- PAGE CONTENT BEGINS -->
+
+                    </div><!-- /.row -->
+                </div><!-- /.page-content -->
+            </div>
+
+        </div>
+    </div>
+
+    #parse("common/footer.html")
+
+    <script type="text/javascript">
+
+        //每次动态加载
+        function showEditWindow(id) {
+            $('#my-modal').context = $("#my-modal").load('/admin/healthCircle/edit?id=' + id);
+            $('#my-modal').modal('show');
+        }
+
+        function deleteConfirm(id){
+            bootbox.confirm("确认删除？",
+                function(result) {
+                    if(result) {
+                        $.post("/admin/healthCircle/delete", {"id":id},
+                            function(data){window.location.reload();}
+                        );
+                    }
+                });
+        }
+    </script>
+</div><!-- /.main-container -->
+
+</body>
+</html>

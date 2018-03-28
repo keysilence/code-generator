@@ -32,9 +32,9 @@ import java.util.*;
  */
 public class SqlParser {
 
-    private static Table table = null;
+    public static Table table = null;
 
-    private static Class classInfo = null;
+    public static Class classInfo = null;
 
     public static void parseCreate(String sql) {
 
@@ -419,6 +419,28 @@ public class SqlParser {
 
         fw.flush();
         fw.close();
+
+    }
+
+    public static void velocityAll(String path) throws Exception {
+
+        velocityPOJO(path);
+
+        velocityPOJOController(path);
+
+        velocityPOJOMapper(path);
+
+        velocityPOJOMapperXML(path);
+
+        velocityPOJOService(path);
+
+        velocityPOJOServiceImpl(path);
+
+        velocityPOJORestController(path);
+
+        velocityListHtml(path);
+
+        velocityEditHtml(path);
 
     }
 
