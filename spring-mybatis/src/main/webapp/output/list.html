@@ -45,22 +45,22 @@
                         <div class="col-sm-3">
                             <form action="/admin/userInfo/list" id="search-from" method="get">
                                                                                                                                         
-                                <input type="text" name="name" placeholder="名称" class="col-xs-10 col-sm-3" value="">
+                                <input type="text" name="name" placeholder="" class="col-xs-10 col-sm-3" value="">
 
                                                                                                         
-                                <input type="text" name="password" placeholder="密码" class="col-xs-10 col-sm-3" value="">
+                                <input type="text" name="password" placeholder="" class="col-xs-10 col-sm-3" value="">
 
                                                                                                         
-                                <input type="text" name="status" placeholder="状态" class="col-xs-10 col-sm-3" value="">
+                                <input type="text" name="status" placeholder="" class="col-xs-10 col-sm-3" value="">
 
                                                                                                         
-                                <input type="text" name="type" placeholder="类型" class="col-xs-10 col-sm-3" value="">
+                                <input type="text" name="type" placeholder="" class="col-xs-10 col-sm-3" value="">
 
                                                                                                         
-                                <input type="text" name="createTime" placeholder="创建时间" class="col-xs-10 col-sm-3" value="">
+                                <input type="text" name="createTime" placeholder="" class="col-xs-10 col-sm-3" value="">
 
                                                                                                         
-                                <input type="text" name="updateTime" placeholder="更新时间" class="col-xs-10 col-sm-3" value="">
+                                <input type="text" name="updateTime" placeholder="" class="col-xs-10 col-sm-3" value="">
 
                                                                     
                                 <button onclick="$('#search-from').submit();" role="button" class="btn btn-sm btn-primary" data-toggle="modal">
@@ -76,28 +76,62 @@
                                 <table id="simple-table" class="table  table-bordered table-hover">
                                     <tr>
                                                                                                                                                                         
-                                        <th>名称</th>
+                                        <th></th>
 
                                                                                                                                 
-                                        <th>密码</th>
+                                        <th></th>
 
                                                                                                                                 
-                                        <th>状态</th>
+                                        <th></th>
 
                                                                                                                                 
-                                        <th>类型</th>
+                                        <th></th>
 
                                                                                                                                 
-                                        <th>创建时间</th>
+                                        <th></th>
 
                                                                                                                                 
-                                        <th>更新时间</th>
+                                        <th></th>
 
                                                                                     
                                         <th>操作</th>
                                     </tr>
 
-                                    
+                                    #foreach(${item} in $!{pageData.result})
+                                    <tr>
+
+                                                                                                                                                                
+                                        <td>$!{item.name}</td>
+
+                                                                                                                        
+                                        <td>$!{item.password}</td>
+
+                                                                                                                        
+                                        <td>$!{item.status}</td>
+
+                                                                                                                        
+                                        <td>$!{item.type}</td>
+
+                                                                                                                        
+                                        <td>$!{item.createTime}</td>
+
+                                                                                                                        
+                                        <td>$!{item.updateTime}</td>
+
+                                                                                
+                                        <td>
+                                            <div class="hidden-sm hidden-xs btn-group">
+                                                <button class="btn btn-xs btn-info" onclick="showEditWindow('${item.id}');">
+                                                    <i class="ace-icon fa fa-pencil bigger-120"></i>
+                                                </button>
+                                                <button class="btn btn-xs btn-danger" onclick="deleteConfirm('${item.id}');">
+                                                    <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    #end
+
                                 </table>
                             </div><!-- /.span -->
                         </div><!-- /.row -->

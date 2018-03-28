@@ -7,13 +7,13 @@ public class UserInfo {
 
     private static final long serialVersionUID = 1L;
 
-    private Long id;//唯一键
-    private String name;//名称
-    private String password;//密码
-    private Integer status;//状态
-    private Integer type;//类型
-    private Timestamp createTime;//创建时间
-    private Timestamp updateTime;//更新时间
+    private Long id;//
+    private String name;//
+    private String password;//
+    private Integer status;//
+    private Integer type;//
+    private Timestamp createTime;//
+    private Timestamp updateTime;//
         
     public Long getId () {
         return this.id;

@@ -99,12 +99,12 @@ public class UserInfoRestController {
     @RequestMapping(value = "/save", method = {RequestMethod.POST})
     public Object save(
                                                 
-            @ApiParam(value = "名称", required = true) @RequestParam(value = "name", defaultValue = "") String name ,                                    
-            @ApiParam(value = "密码", required = true) @RequestParam(value = "password", defaultValue = "") String password ,                                    
-            @ApiParam(value = "状态", required = true) @RequestParam(value = "status", defaultValue = "") Integer status ,                                    
-            @ApiParam(value = "类型", required = true) @RequestParam(value = "type", defaultValue = "") Integer type ,                                    
-            @ApiParam(value = "创建时间", required = true) @RequestParam(value = "createTime", defaultValue = "") Timestamp createTime ,                                    
-            @ApiParam(value = "更新时间", required = true) @RequestParam(value = "updateTime", defaultValue = "") Timestamp updateTime                         
+            @ApiParam(value = "", required = true) @RequestParam(value = "name", defaultValue = "") String name ,                                    
+            @ApiParam(value = "", required = true) @RequestParam(value = "password", defaultValue = "") String password ,                                    
+            @ApiParam(value = "", required = true) @RequestParam(value = "status", defaultValue = "") Integer status ,                                    
+            @ApiParam(value = "", required = true) @RequestParam(value = "type", defaultValue = "") Integer type ,                                    
+            @ApiParam(value = "", required = true) @RequestParam(value = "createTime", defaultValue = "") Timestamp createTime ,                                    
+            @ApiParam(value = "", required = true) @RequestParam(value = "updateTime", defaultValue = "") Timestamp updateTime                         
             }}) {
 
         try {
