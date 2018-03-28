@@ -10,6 +10,7 @@ import com.alibaba.druid.sql.parser.SQLStatementParser;
 import com.alibaba.druid.util.JdbcConstants;
 import com.silence.code.generator.sm.model.Class;
 import com.silence.code.generator.sm.model.Column;
+import com.silence.code.generator.sm.model.Common;
 import com.silence.code.generator.sm.model.Table;
 import com.silence.code.generator.sm.util.ClassConvert;
 import com.silence.code.generator.sm.util.ColumnConvert;
@@ -35,6 +36,8 @@ public class SqlParser {
     public static Table table = null;
 
     public static Class classInfo = null;
+
+    public static Common common = new Common();
 
     public static void parseCreate(String sql) {
 
@@ -379,6 +382,7 @@ public class SqlParser {
 
         ctx.put("class", classInfo);
         ctx.put("table", table);
+        ctx.put("common", common);
 
         File file = new File(path + File.separator + FileConvert.replaceHtmlName(templateName));
 
@@ -460,23 +464,23 @@ public class SqlParser {
         File directory = new File("");
         String path = directory.getAbsolutePath() + File.separator + "spring-mybatis" + File.separator + "output";
 
-        velocityPOJO(path);
-
-        velocityPOJOController(path);
-
-        velocityPOJOMapper(path);
-
-        velocityPOJOMapperXML(path);
-
-        velocityPOJOService(path);
-
-        velocityPOJOServiceImpl(path);
-
-        velocityPOJORestController(path);
+//        velocityPOJO(path);
+//
+//        velocityPOJOController(path);
+//
+//        velocityPOJOMapper(path);
+//
+//        velocityPOJOMapperXML(path);
+//
+//        velocityPOJOService(path);
+//
+//        velocityPOJOServiceImpl(path);
+//
+//        velocityPOJORestController(path);
 
         velocityListHtml(path);
 
-        velocityEditHtml(path);
+//        velocityEditHtml(path);
 
     }
 

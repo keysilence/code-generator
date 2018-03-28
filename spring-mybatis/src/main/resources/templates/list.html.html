@@ -75,7 +75,7 @@
                                         <th>操作</th>
                                     </tr>
 
-                                    #foreach(${item} in $!{pageData.result})
+                                    ${common.listForEach}
                                     <tr>
 
                                         #foreach($column in $table.columns)
@@ -97,7 +97,7 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    #end
+                                    ${common.listEnd}
 
                                 </table>
                             </div><!-- /.span -->

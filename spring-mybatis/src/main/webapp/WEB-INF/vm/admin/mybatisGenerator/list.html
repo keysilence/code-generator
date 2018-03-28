@@ -69,45 +69,7 @@ CREATE TABLE `user_info` (
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-xs-12">
-                        <p class="row">&nbsp;</p>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <table id="simple-table" class="table  table-bordered table-hover">
-                                    <tr>
-                                        <th>Id</th>
-                                        <th>文件名</th>
-                                        <!--<th>创建时间</th>-->
-                                        <th>下载文件</th>
-                                    </tr>
-                                    {{ $TmpType := .Type }}
-                                    {{range $index, $file := .TempFileList}}
-                                    <tr>
-                                        <td>{{$file.Index}}</td>
-                                        <td>{{$file.GenName}} </td>
-                                        <!--<td>{date .UpdateTime "2006-01-02 15:04:05"}</td>-->
-                                        <td>
-                                            <div class="hidden-sm hidden-xs btn-group">
-                                                <a class="btn btn-xs  btn-info" target="_blank"
-                                                   href='/admin/gen/download?Type={{$TmpType}}&Name={{$file.Name}}&GenName={{$file.GenName}}'>
-                                                    <i class="ace-icon fa fa-download bigger-120"></i>
-                                                </a>
-                                                <a class="btn btn-xs btn-info" target="_blank"
-                                                   href='/admin/gen/view?Type={{$TmpType}}&Name={{$file.Name}}&GenName={{$file.GenName}}'>
-                                                    <i class="ace-icon fa fa-pencil bigger-120"></i>
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    {{end}}
-                                </table>
-                            </div><!-- /.span -->
-                        </div><!-- /.row -->
-                        <!-- PAGE CONTENT BEGINS -->
 
-                    </div><!-- /.row -->
-                </div><!-- /.page-content -->
             </div>
 
         </div>

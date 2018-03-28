@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    #parse("common/meta.html")
+</head>
+<body class="no-skin">
+
+#parse("common/header.html")
+
+<div class="main-container ace-save-state" id="main-container">
+    <script type="text/javascript">
+        try{ace.settings.loadState('main-container')}catch(e){}
+    </script>
+
+    #parse("common/left_menu.html")
+
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3 class="smaller lighter blue no-margin">【$!{table.name}】生成代码输入框</h3>
+        </div>
+
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-xs-12">
+                    <p class="row">&nbsp;</p>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <table id="simple-table" class="table  table-bordered table-hover">
+                                <tr>
+                                    <th>文件名</th>
+                                    <th>下载文件</th>
+                                </tr>
+                                #foreach(${item} in $!{files})
+                                <tr>
+                                    <td>$!{item}</td>
+                                    <td>
+                                        <div class="hidden-sm hidden-xs btn-group">
+                                            <a class="btn btn-xs  btn-info" target="_blank"
+                                               href='/admin/mybatisGenerator/download?fileName=$!{item}'>
+                                                <i class="ace-icon fa fa-download bigger-120"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                #end
+                            </table>
+                        </div><!-- /.span -->
+                    </div><!-- /.row -->
+                    <!-- PAGE CONTENT BEGINS -->
+
+                </div><!-- /.row -->
+            </div><!-- /.page-content -->
+        </div>
+
+    </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+
+
+<script type="text/javascript">
+
+</script>
+</div><!-- /.main-container -->
