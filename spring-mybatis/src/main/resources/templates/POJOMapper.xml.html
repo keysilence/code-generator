@@ -9,7 +9,7 @@
             #foreach($column in $table.columns)
                 #if ($column.name != "id")
 
-        <result column="{{$column.name}}" property="{{$column.dbName}}"/>
+        <result column="${column.name}" property="${column.dbName}"/>
                 #end
             #end
 
