@@ -68,13 +68,6 @@ public class SqlParser {
 
         List<SQLStatement> sqlStatementList = SQLUtils.parseStatements(sql, JdbcConstants.MYSQL);
 
-        for (SQLStatement sqlStatement : sqlStatementList) {
-            List<SQLObject> sqlObjects = sqlStatement.getChildren();
-            for (SQLObject sqlObject : sqlObjects) {
-                System.out.println(sqlObject.getAttributes());
-            }
-        }
-
         classInfo = new Class();
 
         MySqlCreateTableStatement mySqlCreateTableStatement = (MySqlCreateTableStatement) sqlStatementList.get(0);
@@ -101,7 +94,6 @@ public class SqlParser {
                     column.setLast(false);
                 }
                 columns.add(column);
-                System.out.println(column);
             }
             index++;
         }
@@ -110,7 +102,6 @@ public class SqlParser {
         table.setName(tableName);
 
         //获取表名
-        System.out.println(mySqlCreateTableStatement.getName().getSimpleName());
         classInfo.setClassName(ClassConvert.getName(tableName));
 
     }
@@ -240,6 +231,7 @@ public class SqlParser {
 
         ctx.put("class", classInfo);
         ctx.put("table", table);
+        ctx.put("common", common);
 
         File file = new File(path + File.separator + FileConvert.replaceHtmlName(templateName));
 
