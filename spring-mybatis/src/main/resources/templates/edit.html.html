@@ -8,7 +8,7 @@
         <div class="modal-body">
             <form class="form-horizontal" id="saveForm" role="form" action="/admin/${class.classNameLower}/save" method="post">
 
-                <input type="hidden" id="id" name="id" value='$!{${class.className}.id}'/>
+                <input type="hidden" id="id" name="id" value='$!{${class.classNameLower}.id}'/>
                 #foreach($column in $table.columns)
                     #if ($column.name != "id")
 

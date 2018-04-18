@@ -22,6 +22,7 @@ import org.apache.velocity.app.Velocity;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
+import org.springframework.stereotype.Repository;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -31,13 +32,14 @@ import java.util.*;
 /**
  * Created by Silence on 2018/3/24.
  */
+@Repository("sqlParser")
 public class SqlParser {
 
-    public static Table table = null;
+    public Table table = null;
 
-    public static Class classInfo = null;
+    public Class classInfo = null;
 
-    public static Common common = new Common();
+    public Common common = null;
 
     public static VelocityEngine ve = null;
 
@@ -54,7 +56,7 @@ public class SqlParser {
 
     }
 
-    public static void parseCreate(String sql) {
+    public void parseCreate(String sql) {
 
 //        // 新建 MySQL Parser
 //        SQLStatementParser parser = new MySqlStatementParser(sql);
@@ -106,7 +108,7 @@ public class SqlParser {
 
     }
 
-    public static void velocity() throws Exception {
+    public void velocity() throws Exception {
 
         File directory = new File("");
         String path = directory.getAbsolutePath() + File.separator + "spring-mybatis" + File.separator + "output";
@@ -151,7 +153,7 @@ public class SqlParser {
 
     }
 
-    public static void velocityPOJO(String path) throws Exception {
+    public void velocityPOJO(String path) throws Exception {
 
         String templateName = "POJO.java.html";
 
@@ -159,7 +161,7 @@ public class SqlParser {
 
     }
 
-    public static void velocityPOJOController(String path) throws Exception {
+    public void velocityPOJOController(String path) throws Exception {
 
         String templateName = "POJOController.java.html";
 
@@ -167,7 +169,7 @@ public class SqlParser {
 
     }
 
-    public static void velocityPOJOMapper(String path) throws Exception {
+    public void velocityPOJOMapper(String path) throws Exception {
 
         String templateName = "POJOMapper.java.html";
 
@@ -175,7 +177,7 @@ public class SqlParser {
 
     }
 
-    public static void velocityPOJOMapperXML(String path) throws Exception {
+    public void velocityPOJOMapperXML(String path) throws Exception {
 
         String templateName = "POJOMapper.xml.html";
 
@@ -183,7 +185,7 @@ public class SqlParser {
 
     }
 
-    public static void velocityPOJOService(String path) throws Exception {
+    public void velocityPOJOService(String path) throws Exception {
 
         String templateName = "POJOService.java.html";
 
@@ -191,7 +193,7 @@ public class SqlParser {
 
     }
 
-    public static void velocityPOJOServiceImpl(String path) throws Exception {
+    public void velocityPOJOServiceImpl(String path) throws Exception {
 
         String templateName = "POJOServiceImpl.java.html";
 
@@ -199,7 +201,7 @@ public class SqlParser {
 
     }
 
-    public static void velocityPOJORestController(String path) throws Exception {
+    public void velocityPOJORestController(String path) throws Exception {
 
         String templateName = "POJORestController.java.html";
 
@@ -207,7 +209,7 @@ public class SqlParser {
 
     }
 
-    public static void velocityListHtml(String path) throws Exception {
+    public void velocityListHtml(String path) throws Exception {
 
         String templateName = "list.html.html";
 
@@ -215,7 +217,7 @@ public class SqlParser {
 
     }
 
-    public static void velocityEditHtml(String path) throws Exception {
+    public void velocityEditHtml(String path) throws Exception {
 
         String templateName = "edit.html.html";
 
@@ -223,7 +225,7 @@ public class SqlParser {
 
     }
 
-    private static void handle(String path, String templateName) throws Exception {
+    private void handle(String path, String templateName) throws Exception {
 
         Template t = ve.getTemplate("templates" + File.separator + templateName);
 
@@ -231,7 +233,7 @@ public class SqlParser {
 
         ctx.put("class", classInfo);
         ctx.put("table", table);
-        ctx.put("common", common);
+        ctx.put("common", new Common());
 
         File file = new File(path + File.separator + FileConvert.replaceHtmlName(templateName));
 
@@ -244,7 +246,7 @@ public class SqlParser {
 
     }
 
-    public static void velocityAll(String path) throws Exception {
+    public void velocityAll(String path) throws Exception {
 
         velocityPOJO(path);
 
@@ -266,6 +268,22 @@ public class SqlParser {
 
     }
 
+    public Table getTable() {
+        return table;
+    }
+
+    public void setTable(Table table) {
+        this.table = table;
+    }
+
+    public Class getClassInfo() {
+        return classInfo;
+    }
+
+    public void setClassInfo(Class classInfo) {
+        this.classInfo = classInfo;
+    }
+
     public static void main(String[] args) throws Exception {
 
         String sql = "CREATE TABLE `comment_praise` (\n" +
@@ -277,7 +295,8 @@ public class SqlParser {
                 "    `update_time` bigint(20) NOT NULL\n" +
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 
-        parseCreate(sql);
+        SqlParser sqlParser = new SqlParser();
+        sqlParser.parseCreate(sql);
 
         File directory = new File("");
         String path = directory.getAbsolutePath() + File.separator + "spring-mybatis" + File.separator + "output";
@@ -296,7 +315,7 @@ public class SqlParser {
 //
 //        velocityPOJORestController(path);
 
-        velocityListHtml(path);
+        sqlParser.velocityListHtml(path);
 
 //        velocityEditHtml(path);
 

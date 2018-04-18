@@ -1,10 +1,12 @@
 package com.silence.code.generator.sm.web;
 
 import com.silence.code.generator.sm.SqlParser;
+import com.silence.code.generator.sm.model.Class;
 import com.silence.code.generator.sm.model.Column;
 import com.silence.code.generator.sm.model.Table;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,13 +28,17 @@ public class MybatisGeneratorController {
 
     private static final Logger logger = LoggerFactory.getLogger(MybatisGeneratorController.class);
 
+    @Autowired
+    private SqlParser sqlParser;
+
     @RequestMapping(value = "/edit", method = {RequestMethod.GET})
     public String edit(@RequestParam(value = "sql") String sql,
                        Model view) {
         try {
-            SqlParser.parseCreate(sql);
-            view.addAttribute("table", SqlParser.table);
-            view.addAttribute("class", SqlParser.classInfo);
+            sqlParser.parseCreate(sql);
+            view.addAttribute("table", sqlParser.getTable());
+            view.addAttribute("class", sqlParser.getClassInfo());
+            view.addAttribute("classInfo", sqlParser.getClassInfo());
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
@@ -47,7 +53,10 @@ public class MybatisGeneratorController {
                        Model view) {
 
         try {
-            Table table = SqlParser.table;
+            Class classInfo = sqlParser.getClassInfo();
+            classInfo.setClassName(className);
+            classInfo.setPackageName(packageName);
+            Table table = sqlParser.getTable();
             List<Column> columns = table.getColumns();
             for (int i = 0; i < columns.size(); i++ ) {
                 Column column = columns.get(i);
@@ -59,7 +68,7 @@ public class MybatisGeneratorController {
             for (File file: files) {
                 file.delete();
             }
-            SqlParser.velocityAll(path);
+            sqlParser.velocityAll(path);
             String[] fileArray = directory.list();
             view.addAttribute("files", fileArray);
         } catch (Exception e) {
@@ -73,11 +82,7 @@ public class MybatisGeneratorController {
     public String list(@RequestParam(value = "page", defaultValue = "0") int page,
                        @RequestParam(value = "id", required = false) Long id,
                        Model view) {
-        try {
 
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
         return "admin/mybatisGenerator/list";
 
     }

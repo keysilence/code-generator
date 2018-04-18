@@ -24,4 +24,5 @@ public class Common {
     public void setListEnd(String listEnd) {
         this.listEnd = listEnd;
     }
+
 }
