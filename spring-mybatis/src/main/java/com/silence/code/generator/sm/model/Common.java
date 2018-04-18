@@ -1,6 +1,7 @@
 package com.silence.code.generator.sm.model;
 
 /**
+ * 由于Velocity语法与替换语法相冲突，因此想到使用变量的这种方式解决问题
  * Created by Silence on 2018/3/28.
  */
 public class Common {

@@ -41,4 +41,5 @@ public class Class {
                 ", classNameLower='" + classNameLower + '\'' +
                 '}';
     }
+
 }

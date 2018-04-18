@@ -39,6 +39,21 @@ public class SqlParser {
 
     public static Common common = new Common();
 
+    public static VelocityEngine ve = null;
+
+    static {
+
+        ve = new VelocityEngine();
+        ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
+        ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+        //解决乱码问题
+        ve.setProperty(Velocity.ENCODING_DEFAULT, "UTF-8");
+        ve.setProperty(Velocity.INPUT_ENCODING, "UTF-8");
+        ve.setProperty(Velocity.OUTPUT_ENCODING, "UTF-8");
+        ve.init();
+
+    }
+
     public static void parseCreate(String sql) {
 
 //        // 新建 MySQL Parser
@@ -63,9 +78,8 @@ public class SqlParser {
         classInfo = new Class();
 
         MySqlCreateTableStatement mySqlCreateTableStatement = (MySqlCreateTableStatement) sqlStatementList.get(0);
-        System.out.println(mySqlCreateTableStatement.getTableGroup());
+
         List<SQLObject> sqlObjects = mySqlCreateTableStatement.getChildren();
-        System.out.println(sqlObjects);
 
         table = new Table();
         List<Column> columns = new ArrayList<>();
@@ -148,265 +162,77 @@ public class SqlParser {
 
     public static void velocityPOJO(String path) throws Exception {
 
-        VelocityEngine ve = new VelocityEngine();
-        ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
-        ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
-        //解决乱码问题
-        ve.setProperty(Velocity.ENCODING_DEFAULT, "UTF-8");
-        ve.setProperty(Velocity.INPUT_ENCODING, "UTF-8");
-        ve.setProperty(Velocity.OUTPUT_ENCODING, "UTF-8");
-        ve.init();
-
         String templateName = "POJO.java.html";
 
-        Template t = ve.getTemplate("templates" + File.separator + templateName);
-        System.out.println(t.getName());
-        VelocityContext ctx = new VelocityContext();
-
-        ctx.put("class", classInfo);
-        ctx.put("table", table);
-
-        File file = new File(path + File.separator + FileConvert.replaceName(templateName, classInfo.getClassName()));
-
-        FileWriter fw = new FileWriter(file);
-
-        t.merge(ctx, fw);
-
-        fw.flush();
-        fw.close();
+        handle(path, templateName);
 
     }
 
     public static void velocityPOJOController(String path) throws Exception {
 
-        VelocityEngine ve = new VelocityEngine();
-        ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
-        ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
-        //解决乱码问题
-        ve.setProperty(Velocity.ENCODING_DEFAULT, "UTF-8");
-        ve.setProperty(Velocity.INPUT_ENCODING, "UTF-8");
-        ve.setProperty(Velocity.OUTPUT_ENCODING, "UTF-8");
-        ve.init();
-
         String templateName = "POJOController.java.html";
 
-        Template t = ve.getTemplate("templates" + File.separator + templateName);
-
-        VelocityContext ctx = new VelocityContext();
-
-        ctx.put("class", classInfo);
-        ctx.put("table", table);
-
-        File file = new File(path + File.separator + FileConvert.replaceName(templateName, classInfo.getClassName()));
-
-        FileWriter fw = new FileWriter(file);
-
-        t.merge(ctx, fw);
-
-        fw.flush();
-        fw.close();
+        handle(path, templateName);
 
     }
 
     public static void velocityPOJOMapper(String path) throws Exception {
 
-        VelocityEngine ve = new VelocityEngine();
-        ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
-        ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
-        //解决乱码问题
-        ve.setProperty(Velocity.ENCODING_DEFAULT, "UTF-8");
-        ve.setProperty(Velocity.INPUT_ENCODING, "UTF-8");
-        ve.setProperty(Velocity.OUTPUT_ENCODING, "UTF-8");
-        ve.init();
-
         String templateName = "POJOMapper.java.html";
 
-        Template t = ve.getTemplate("templates" + File.separator + templateName);
-
-        VelocityContext ctx = new VelocityContext();
-
-        ctx.put("class", classInfo);
-        ctx.put("table", table);
-
-        File file = new File(path + File.separator + FileConvert.replaceName(templateName, classInfo.getClassName()));
-
-        FileWriter fw = new FileWriter(file);
-
-        t.merge(ctx, fw);
-
-        fw.flush();
-        fw.close();
+        handle(path, templateName);
 
     }
 
     public static void velocityPOJOMapperXML(String path) throws Exception {
 
-        VelocityEngine ve = new VelocityEngine();
-        ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
-        ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
-        //解决乱码问题
-        ve.setProperty(Velocity.ENCODING_DEFAULT, "UTF-8");
-        ve.setProperty(Velocity.INPUT_ENCODING, "UTF-8");
-        ve.setProperty(Velocity.OUTPUT_ENCODING, "UTF-8");
-        ve.init();
-
         String templateName = "POJOMapper.xml.html";
 
-        Template t = ve.getTemplate("templates" + File.separator + templateName);
-
-        VelocityContext ctx = new VelocityContext();
-
-        ctx.put("class", classInfo);
-        ctx.put("table", table);
-
-        File file = new File(path + File.separator + FileConvert.replaceName(templateName, classInfo.getClassName()));
-
-        FileWriter fw = new FileWriter(file);
-
-        t.merge(ctx, fw);
-
-        fw.flush();
-        fw.close();
+        handle(path, templateName);
 
     }
 
     public static void velocityPOJOService(String path) throws Exception {
 
-        VelocityEngine ve = new VelocityEngine();
-        ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
-        ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
-        //解决乱码问题
-        ve.setProperty(Velocity.ENCODING_DEFAULT, "UTF-8");
-        ve.setProperty(Velocity.INPUT_ENCODING, "UTF-8");
-        ve.setProperty(Velocity.OUTPUT_ENCODING, "UTF-8");
-        ve.init();
-
         String templateName = "POJOService.java.html";
 
-        Template t = ve.getTemplate("templates" + File.separator + templateName);
-
-        VelocityContext ctx = new VelocityContext();
-
-        ctx.put("class", classInfo);
-        ctx.put("table", table);
-
-        File file = new File(path + File.separator + FileConvert.replaceName(templateName, classInfo.getClassName()));
-
-        FileWriter fw = new FileWriter(file);
-
-        t.merge(ctx, fw);
-
-        fw.flush();
-        fw.close();
+        handle(path, templateName);
 
     }
 
     public static void velocityPOJOServiceImpl(String path) throws Exception {
 
-        VelocityEngine ve = new VelocityEngine();
-        ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
-        ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
-        //解决乱码问题
-        ve.setProperty(Velocity.ENCODING_DEFAULT, "UTF-8");
-        ve.setProperty(Velocity.INPUT_ENCODING, "UTF-8");
-        ve.setProperty(Velocity.OUTPUT_ENCODING, "UTF-8");
-        ve.init();
-
         String templateName = "POJOServiceImpl.java.html";
 
-        Template t = ve.getTemplate("templates" + File.separator + templateName);
-
-        VelocityContext ctx = new VelocityContext();
-
-        ctx.put("class", classInfo);
-        ctx.put("table", table);
-
-        File file = new File(path + File.separator + FileConvert.replaceName(templateName, classInfo.getClassName()));
-
-        FileWriter fw = new FileWriter(file);
-
-        t.merge(ctx, fw);
-
-        fw.flush();
-        fw.close();
+        handle(path, templateName);
 
     }
 
     public static void velocityPOJORestController(String path) throws Exception {
 
-        VelocityEngine ve = new VelocityEngine();
-        ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
-        ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
-        //解决乱码问题
-        ve.setProperty(Velocity.ENCODING_DEFAULT, "UTF-8");
-        ve.setProperty(Velocity.INPUT_ENCODING, "UTF-8");
-        ve.setProperty(Velocity.OUTPUT_ENCODING, "UTF-8");
-        ve.init();
-
         String templateName = "POJORestController.java.html";
 
-        Template t = ve.getTemplate("templates" + File.separator + templateName);
-
-        VelocityContext ctx = new VelocityContext();
-
-        ctx.put("class", classInfo);
-        ctx.put("table", table);
-
-        File file = new File(path + File.separator + FileConvert.replaceName(templateName, classInfo.getClassName()));
-
-        FileWriter fw = new FileWriter(file);
-
-        t.merge(ctx, fw);
-
-        fw.flush();
-        fw.close();
+        handle(path, templateName);
 
     }
 
     public static void velocityListHtml(String path) throws Exception {
 
-        VelocityEngine ve = new VelocityEngine();
-        ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
-        ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
-        //解决乱码问题
-        ve.setProperty(Velocity.ENCODING_DEFAULT, "UTF-8");
-        ve.setProperty(Velocity.INPUT_ENCODING, "UTF-8");
-        ve.setProperty(Velocity.OUTPUT_ENCODING, "UTF-8");
-        ve.init();
-
         String templateName = "list.html.html";
 
-        Template t = ve.getTemplate("templates" + File.separator + templateName);
-
-        VelocityContext ctx = new VelocityContext();
-
-        ctx.put("class", classInfo);
-        ctx.put("table", table);
-        ctx.put("common", common);
-
-        File file = new File(path + File.separator + FileConvert.replaceHtmlName(templateName));
-
-        FileWriter fw = new FileWriter(file);
-
-        t.merge(ctx, fw);
-
-        fw.flush();
-        fw.close();
+        handle(path, templateName);
 
     }
 
     public static void velocityEditHtml(String path) throws Exception {
 
-        VelocityEngine ve = new VelocityEngine();
-        ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
-        ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
-        //解决乱码问题
-        ve.setProperty(Velocity.ENCODING_DEFAULT, "UTF-8");
-        ve.setProperty(Velocity.INPUT_ENCODING, "UTF-8");
-        ve.setProperty(Velocity.OUTPUT_ENCODING, "UTF-8");
-        ve.init();
-
         String templateName = "edit.html.html";
+
+        handle(path, templateName);
+
+    }
+
+    private static void handle(String path, String templateName) throws Exception {
 
         Template t = ve.getTemplate("templates" + File.separator + templateName);
 
