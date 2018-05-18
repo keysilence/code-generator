@@ -17,7 +17,7 @@ public class TypeConvert {
             type = "byte[]";
         } else if (dbType.toUpperCase().equals("TEXT")) {
             type = "String";
-        } else if (dbType.toUpperCase().equals("INTEGER")) {
+        } else if (dbType.toUpperCase().equals("INTEGER") || dbType.toUpperCase().equals("INT")) {
             type = "Integer";
         } else if (dbType.toUpperCase().equals("TINYINT")) {
             type = "Integer";
