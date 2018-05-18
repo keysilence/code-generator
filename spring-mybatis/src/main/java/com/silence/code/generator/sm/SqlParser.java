@@ -235,7 +235,7 @@ public class SqlParser {
         ctx.put("table", table);
         ctx.put("common", new Common());
 
-        File file = new File(path + File.separator + FileConvert.replaceHtmlName(templateName));
+        File file = new File(path + File.separator + FileConvert.replaceName(templateName, classInfo.getClassName()));
 
         FileWriter fw = new FileWriter(file);
 

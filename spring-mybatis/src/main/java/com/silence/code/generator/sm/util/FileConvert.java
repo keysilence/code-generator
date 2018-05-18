@@ -7,7 +7,8 @@ public class FileConvert {
 
     public static String replaceName(String templateName, String className) {
 
-        String name = templateName.replace("POJO", className).replace(".html", "");
+        String name = templateName.replace("POJO", className);
+        name = name.substring(0, name.lastIndexOf("."));
 
         return name;
 
