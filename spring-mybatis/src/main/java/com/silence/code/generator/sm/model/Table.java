@@ -54,10 +54,10 @@ public class Table {
             stringBuffer.append("`");
             stringBuffer.append(col.getDbName());
             stringBuffer.append("`");
-            stringBuffer.append(" AS ");
-            stringBuffer.append("'");
-            stringBuffer.append(col.getName());
-            stringBuffer.append("'");
+//            stringBuffer.append(" AS ");
+//            stringBuffer.append("'");
+//            stringBuffer.append(col.getName());
+//            stringBuffer.append("'");
         }
         return stringBuffer.substring(1);
 
