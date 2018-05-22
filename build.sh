@@ -24,7 +24,7 @@ docker rmi -f ${tag_name}
 docker build -f ./Dockerfile -t ${tag_name} .
 
 # 登录网易云镜像服务器
-docker login -u chenmohaha_2000@163.com -p cm13811666786 hub.c.163.com
+docker login -u chenmohaha_2000@163.com -p CHENMO69582770 hub.c.163.com
 
 # 修改标签
 docker tag ${tag_name} hub.c.163.com/keysilence/store/docker/${project_name}:1.0.0
