@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-
+    ${common.meta}
 </head>
 <body class="no-skin">
 
-
+${common.header}
 
 <div class="main-container ace-save-state" id="main-container">
     <script type="text/javascript">
         try{ace.settings.loadState('main-container')}catch(e){}
     </script>
 
-
+    ${common.leftMenu}
 
     <div class="main-content">
         <div class="main-content-inner">
@@ -104,10 +104,10 @@
                         </div><!-- /.row -->
                         <!-- PAGE CONTENT BEGINS -->
 
-                        #if($!pageData.totalCount > 0)
+                        ${common.ifTotalCount}
                         <!-- 分页栏 -->
-                        #showPage($!{pageData},"/admin/${class.classNameLower}/list?")
-                        #end
+                        ${common.showPage}
+                        ${common.listEnd}
 
                     </div><!-- /.row -->
                 </div><!-- /.page-content -->
@@ -116,7 +116,7 @@
         </div>
     </div><!-- /.main-content -->
 
-
+    ${common.footer}
 
     <script type="text/javascript">
         //每次动态加载
