@@ -313,9 +313,9 @@ public class SqlParser {
 //
 //        velocityPOJOServiceImpl(path);
 //
-//        velocityPOJORestController(path);
+        sqlParser.velocityPOJORestController(path);
 
-        sqlParser.velocityListHtml(path);
+//        sqlParser.velocityListHtml(path);
 
 //        velocityEditHtml(path);
 

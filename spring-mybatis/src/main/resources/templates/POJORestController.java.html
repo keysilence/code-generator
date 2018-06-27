@@ -101,17 +101,17 @@ public class ${class.className}RestController {
             #foreach($column in $table.columns)
             #if ($column.name != "id")
 
-            @ApiParam(value = "$column.annotation", required = true) @RequestParam(value = "$column.name", defaultValue = "") $column.type $column.name #if (!$column.last),#end
+            @ApiParam(value = "${column.annotation}", required = true) @RequestParam(value = "${column.name}", defaultValue = "") ${column.type} ${column.name} #if (!${column.last}),#end
             #end
             #end
 
-            }}) {
+            ) {
 
         try {
             ${class.className} ${class.classNameLower} = new ${class.className}();
             #foreach($column in $table.columns)
 
-            ${class.classNameLower}.set$column.nameUpper($column.name);
+            ${class.classNameLower}.set${column.nameUpper}(${column.name});
             #end
 
             long rows = ${class.classNameLower}Service.save${class.className}(${class.classNameLower});
