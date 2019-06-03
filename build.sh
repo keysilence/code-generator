@@ -24,13 +24,24 @@ docker rmi -f ${tag_name}
 docker build -f ./Dockerfile -t ${tag_name} .
 
 # 登录网易云镜像服务器
-docker login -u chenmohaha_2000@163.com -p CHENMO69582770 hub.c.163.com
+#docker login -u chenmohaha_2000@163.com -p CHENMO69582770 hub.c.163.com
 
 # 修改标签
-docker tag ${tag_name} hub.c.163.com/keysilence/store/docker/${project_name}:1.0.0
+#docker tag ${tag_name} hub.c.163.com/keysilence/store/docker/${project_name}:1.0.0
 
 # 推到网易云
-docker push hub.c.163.com/keysilence/store/docker/${project_name}:1.0.0
+#docker push hub.c.163.com/keysilence/store/docker/${project_name}:1.0.0
+
+
+base_url=10.19.248.200:30100
+
+docker_url=${base_url}/g_laikang/${project_name}:1.0.0
+
+docker tag ${tag_name} ${docker_url}
+
+docker login -u ggov -p !qaz2wsX ${base_url}
+
+docker push ${docker_url}
 
 rm -rf spring-mybatis.war
 
