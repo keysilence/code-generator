@@ -2,7 +2,7 @@ package ${class.packageName}.web;
 
 import com.google.common.base.Strings;
 import ${class.packageName}.domain.${class.className};
-import ${class.packageName}.common.page.Page;
+import ${class.packageName}.common.result.Page;
 import ${class.packageName}.common.Constants;
 import ${class.packageName}.service.${class.className}Service;
 import org.slf4j.Logger;
@@ -39,7 +39,7 @@ public class ${class.className}Controller {
             view.addAttribute("${class.classNameLower}", ${class.classNameLower});
 
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            logger.error("edit Error！{}", e);
         }
         return "admin/${class.classNameLower}/edit";
 
@@ -58,7 +58,7 @@ public class ${class.className}Controller {
             view.addAttribute("${class.classNameLower}", ${class.classNameLower});
 
         } catch (Exception e) {
-                logger.error(e.getMessage(), e);
+            logger.error("view Error！{}", e);
         }
         return "admin/${class.classNameLower}/view";
 
@@ -73,7 +73,7 @@ public class ${class.className}Controller {
             ${class.classNameLower}Service.delete${class.className}(id);
 
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            logger.error("delete Error！{}", e);
         }
         return String.format(Constants.WEB_IFRAME_SCRIPT, "删除成功！");
 
@@ -89,7 +89,7 @@ public class ${class.className}Controller {
             view.addAttribute("${class.classNameLower}", ${class.classNameLower});
 
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            logger.error("save Error！{}", e);
         }
         return String.format(Constants.WEB_IFRAME_SCRIPT, "保存成功！");
 
@@ -112,7 +112,7 @@ public class ${class.className}Controller {
 
 
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            logger.error("list Error！{}", e);
         }
         return "admin/${class.classNameLower}/list";
 

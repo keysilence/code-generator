@@ -35,7 +35,7 @@ docker build -f ./Dockerfile -t ${tag_name} .
 
 base_url=10.19.248.200:30100
 
-docker_url=${base_url}/g_laikang/${project_name}:1.0.0
+docker_url=${base_url}/g_laikang/${project_name}:1.0.1
 
 docker tag ${tag_name} ${docker_url}
 
