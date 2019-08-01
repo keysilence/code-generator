@@ -6,6 +6,7 @@ import ${class.packageName}.common.page.Page;
 import ${class.packageName}.common.Constants;
 import ${class.packageName}.common.ResultJson;
 import ${class.packageName}.common.ResultPageJson;
+import ${class.packageName}.common.exception.ResultMessage;
 import ${class.packageName}.service.${class.className}Service;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
@@ -57,12 +58,13 @@ public class ${class.className}RestController {
 
     private static Integer pageSize = 15;
 
-    @ApiOperation(value = "按Id查询", notes = "", response = ${class.className}Response.class,
+    @ApiOperation(value = "按ID查询", notes = "", response = ${class.className}Response.class,
         authorizations = {@Authorization(value = "UserToken"), @Authorization(value = "DeviceToken")})
     @ResponseBody
     @RequestMapping(value = "/get", method = {RequestMethod.GET})
     public Object get(@RequestParam(value = "id", defaultValue = "0") Long id,
                        Model view) {
+        ResultJson resultJson = new ResultJson();
         ${class.className} ${class.classNameLower} = null;
         try {
             if (id != null && id.longValue() > 0) {
@@ -70,27 +72,31 @@ public class ${class.className}RestController {
             }else{
                 ${class.classNameLower} = new ${class.className}();
             }
+            resultJson.setData(${class.classNameLower});
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            return Constants.getErrorMsg(e.getMessage());
+            logger.error("get Error！{}", e);
+            resultJson.setCode(ResultMessage.ERR_SYSTEM_CODE.getCode());
+            resultJson.setMessage(ResultMessage.ERR_SYSTEM_CODE.getMessage());
         }
-        return new ResultJson().setData(${class.classNameLower});
+        return resultJson;
     }
 
-    @ApiOperation(value = "按Id删除", notes = "", response = ResultJson.class,
+    @ApiOperation(value = "按ID删除", notes = "", response = ResultJson.class,
         authorizations = {@Authorization(value = "UserToken"), @Authorization(value = "DeviceToken")})
     @ResponseBody
     @RequestMapping(value = "/delete", method = {RequestMethod.DELETE})
     public Object delete(@RequestParam(value = "id", defaultValue = "0") Long id) {
+        ResultJson resultJson = new ResultJson();
         try {
 
-            long rows = ${class.classNameLower}Service.delete${class.className}(id);
+            ${class.classNameLower}Service.delete${class.className}(id);
 
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            return Constants.getErrorMsg(e.getMessage());
+            logger.error("delete Error！{}", e);
+            resultJson.setCode(ResultMessage.ERR_SYSTEM_CODE.getCode());
+            resultJson.setMessage(ResultMessage.ERR_SYSTEM_CODE.getMessage());
         }
-        return Constants.getSuccessMsg();
+        return resultJson;
     }
 
     @ApiOperation(value = "保存数据", notes = "", response = ${class.className}Response.class,
@@ -98,6 +104,7 @@ public class ${class.className}RestController {
     @ResponseBody
     @RequestMapping(value = "/save", method = {RequestMethod.POST})
     public Object save(
+            ResultJson resultJson = new ResultJson();
             #foreach($column in $table.columns)
             #if ($column.name != "id")
 
@@ -117,37 +124,40 @@ public class ${class.className}RestController {
             long rows = ${class.classNameLower}Service.save${class.className}(${class.classNameLower});
 
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            return Constants.getErrorMsg(e.getMessage());
+            logger.error("save Error！{}", e);
+            resultJson.setCode(ResultMessage.ERR_SYSTEM_CODE.getCode());
+            resultJson.setMessage(ResultMessage.ERR_SYSTEM_CODE.getMessage());
         }
-        return Constants.getSuccessMsg();
+        return resultJson;
     }
 
-    @ApiOperation(value = "查询list", notes = "", response = ${class.className}ListResponse.class,
+    @ApiOperation(value = "查询列表", notes = "", response = ${class.className}ListResponse.class,
         authorizations = {@Authorization(value = "UserToken"), @Authorization(value = "DeviceToken")})
     @ResponseBody
     @RequestMapping(value = "/list", method = {RequestMethod.GET})
     public Object list(@RequestParam(value = "page", defaultValue = "0") int page,
-                       @RequestParam(value = "id", required = false) Long id) {
+                       @RequestParam(value = "param", required = false) String param) {
+        ResultPageJson resultPageJson = new ResultPageJson();
         Page<${class.className}> pageData = null;
         try {
             //查询
             Map<String, Object> search = new HashMap<String, Object>();
-            if (id != null) {
-                search.put("id", id);
+            if (param != null) {
+                search.put("param", param);
             }
             pageData = ${class.classNameLower}Service.query${class.className}Page(page, pageSize,search);
             //放入page对象。
-            return new ResultPageJson()
-                    .setData(pageData.getResult())
-                    .setTotalCount(pageData.getTotalCount())
-                    .setCurrentPage(pageData.getCurrentPage())
-                    .setPageCount(pageData.getPageCount());
-
+            resultPageJson.setData(pageData.getResult())
+            resultPageJson.setTotalCount(pageData.getTotalCount())
+            resultPageJson.setCurrentPage(pageData.getCurrentPage())
+            resultPageJson.setPageCount(pageData.getPageCount());
+            return resultPageJson;
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            return Constants.getErrorMsg(e.getMessage());
+            logger.error("list Error！{}", e);
+            resultPageJson.setCode(ResultMessage.ERR_SYSTEM_CODE.getCode());
+            resultPageJson.setMessage(ResultMessage.ERR_SYSTEM_CODE.getMessage());
         }
+        return resultPageJson;
     }
 
 }

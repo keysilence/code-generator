@@ -51,7 +51,7 @@
     </select>
 
     <!-- batch查询 -->
-    <select id="selectByBatchIds" parameterType="java.util.Map" resultMap="${class.classNameLower}Map">
+    <select id="selectByBatchIds" parameterType="java.util.List" resultMap="${class.classNameLower}Map">
         SELECT
         <include refid="QUERY_COLUMN_LIST"/>
         FROM

@@ -70,7 +70,7 @@ public class ${class.className}Controller {
 
         try {
 
-            long rows = ${class.classNameLower}Service.delete${class.className}(id);
+            ${class.classNameLower}Service.delete${class.className}(id);
 
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
@@ -85,7 +85,7 @@ public class ${class.className}Controller {
 
         try {
 
-            long rows = ${class.classNameLower}Service.save${class.className}(${class.classNameLower});
+            ${class.classNameLower}Service.save${class.className}(${class.classNameLower});
             view.addAttribute("${class.classNameLower}", ${class.classNameLower});
 
         } catch (Exception e) {
@@ -96,13 +96,13 @@ public class ${class.className}Controller {
     }
 
     @RequestMapping(value = "/list", method = {RequestMethod.GET, RequestMethod.POST})
-    public String list(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "id", required = false) Long id, Model view) {
+    public String list(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "param", required = false) String param, Model view) {
 
         try {
             //查询
             Map<String, Object> search = new HashMap<String, Object>();
-            if (id != null) {
-                search.put("id", id);
+            if (param != null) {
+                search.put("param", param);
             }
 
             Page<${class.className}> pageData = ${class.classNameLower}Service.query${class.className}Page(page, pageSize,search);
