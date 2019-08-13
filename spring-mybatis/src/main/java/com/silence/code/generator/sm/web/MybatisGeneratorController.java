@@ -121,4 +121,38 @@ public class MybatisGeneratorController {
 
     }
 
+    @RequestMapping(value = "/example/download", method = {RequestMethod.GET, RequestMethod.POST})
+    @ResponseBody
+    public String downloadExample(@RequestParam(value = "fileName") String fileName,
+                                  HttpServletRequest request,
+                                  HttpServletResponse response, Model view) {
+
+        try {
+            response.setCharacterEncoding("utf-8");
+            response.setContentType("multipart/form-data");
+            response.setHeader("Content-Disposition", "attachment;fileName=" + fileName);
+            String path = request.getRealPath("") + File.separator + "example";
+            //打开本地文件流
+            InputStream inputStream = new FileInputStream(path + File.separator + fileName);
+            //激活下载操作
+            OutputStream os = response.getOutputStream();
+
+            //循环写入输出流
+            byte[] b = new byte[2048];
+            int length;
+            while ((length = inputStream.read(b)) > 0) {
+                os.write(b, 0, length);
+            }
+
+            // 这里主要关闭。
+            os.close();
+            inputStream.close();
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+
+        return "";
+
+    }
+
 }
