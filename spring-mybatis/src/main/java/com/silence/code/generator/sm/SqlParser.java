@@ -4,9 +4,6 @@ import com.alibaba.druid.sql.SQLUtils;
 import com.alibaba.druid.sql.ast.SQLObject;
 import com.alibaba.druid.sql.ast.SQLStatement;
 import com.alibaba.druid.sql.dialect.mysql.ast.statement.MySqlCreateTableStatement;
-import com.alibaba.druid.sql.dialect.mysql.parser.MySqlStatementParser;
-import com.alibaba.druid.sql.dialect.mysql.visitor.MySqlSchemaStatVisitor;
-import com.alibaba.druid.sql.parser.SQLStatementParser;
 import com.alibaba.druid.util.JdbcConstants;
 import com.silence.code.generator.sm.model.Class;
 import com.silence.code.generator.sm.model.Column;
@@ -26,8 +23,8 @@ import org.springframework.stereotype.Repository;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.io.StringWriter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Silence on 2018/3/24.
