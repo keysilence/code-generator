@@ -31,19 +31,7 @@
                     </div>
 
                     <div class="modal-header">
-                        <h3 class="smaller lighter blue no-margin">上传Excel文件</h3>
-                    </div>
-
-                    <div class="modal-body">
-                        <form class="form-horizontal" action="/admin/excel/import/upload" id="uploadForm" role="form" enctype="multipart/form-data" method="post">
-                            <div class="modal-footer" style="background-color: white">
-                                <button id="btnCommit" class="btn btn-sm btn-primary" type="button" onclick="document.getElementById('uploadForm').submit()">
-                                    <i class="ace-icon fa fa-check"></i>
-                                    提交
-                                </button>
-                            </div>
-                            <input type="file" name="file">
-                        </form>
+                        <h3 class="smaller lighter blue no-margin">补全信息</h3>
                     </div>
 
                     <div class="modal-body">
@@ -77,8 +65,8 @@
                             #foreach(${item} in $!{columns})
                             <div class="form-group">
                                 <label class="col-sm-3 control-label no-padding-right">${item}：</label>
-                                <div class="col-sm-9"><input type="text" name="columnName" class="col-xs-10 col-sm-5" value=""></div>
-                                <div class="col-sm-9"><input type="text" name="columnType" class="col-xs-10 col-sm-5" value=""></div>
+                                <div class="col-sm-4"><input type="text" name="columnName" class="col-xs-10 col-sm-5" value="" placeholder="字段名"></div>
+                                <div class="col-sm-4"><input type="text" name="columnType" class="col-xs-10 col-sm-5" value="" placeholder="字段类型(20)"></div>
                                 <div class="col-sm-1"><input type="hidden" name="annotation" class="col-xs-10 col-sm-5" value="${item}"></div>
                             </div>
                             #end

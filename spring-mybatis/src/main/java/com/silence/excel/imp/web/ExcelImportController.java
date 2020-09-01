@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -38,8 +39,9 @@ public class ExcelImportController {
     }
 
     @RequestMapping(value = "/save", method = {RequestMethod.GET, RequestMethod.POST})
+    @ResponseBody
     public String edit(String uuid, String tableName, String dataSource, String userName, String password,
-                       String[] columnName, String[] columnType, String[] annotation) {
+                       String[] columnName, String[] columnType, String[] annotation, HttpServletRequest request) {
 
 
         Map<String, String> aName = new HashedMap();
@@ -89,6 +91,12 @@ public class ExcelImportController {
                 dataAutoImporter.execute(conn, tableSql);
             }
             importFile.delete();
+            String path = request.getRealPath("") + File.separator + "output" + File.separator + uuid;
+            File filePath = new File(path);
+            if (filePath.exists()) {
+                filePath.delete();
+            }
+            map.remove(uuid);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
@@ -154,7 +162,7 @@ public class ExcelImportController {
             logger.error(e.getMessage(), e);
         }
 
-        return "admin/excelImport/list";
+        return "admin/excelImport/edit";
 
     }
 

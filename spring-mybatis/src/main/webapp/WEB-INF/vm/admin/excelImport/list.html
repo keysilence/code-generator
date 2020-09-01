@@ -46,51 +46,6 @@
                         </form>
                     </div>
 
-                    <div class="modal-body">
-                        <form class="form-horizontal" action="/admin/excel/import/save" id="saveForm" role="form" method="post">
-                            <input type="hidden" name="uuid" class="col-xs-10 col-sm-5" value="${uuid}">
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right">生成表名：</label>
-                                <div class="col-sm-9"><input type="text" name="tableName" class="col-xs-10 col-sm-5" value="$!{tableName}"></div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right">数据源：</label>
-                                <div class="col-sm-9"><input type="text" name="dataSource" class="col-xs-10 col-sm-5" value="$!{dataSource}"></div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right">用户名：</label>
-                                <div class="col-sm-9"><input type="text" name="userName" class="col-xs-10 col-sm-5" value="$!{userName}"></div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right">密码：</label>
-                                <div class="col-sm-9"><input type="text" name="password" class="col-xs-10 col-sm-5" value="$!{password}"></div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-10 control-label padding-center" style="text-align: center;font-weight: bold;">
-                                    设置列名对应的英文名称（不输入默认是列名）：</label>
-                            </div>
-
-                            #foreach(${item} in $!{columns})
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right">${item}：</label>
-                                <div class="col-sm-9"><input type="text" name="columnName" class="col-xs-10 col-sm-5" value=""></div>
-                                <div class="col-sm-9"><input type="text" name="columnType" class="col-xs-10 col-sm-5" value=""></div>
-                                <div class="col-sm-1"><input type="hidden" name="annotation" class="col-xs-10 col-sm-5" value="${item}"></div>
-                            </div>
-                            #end
-
-                            <div class="modal-footer" style="background-color: white">
-                                <button class="btn btn-sm btn-primary" type="button" onclick="document.getElementById('saveForm').submit()">
-                                    <i class="ace-icon fa fa-check"></i>
-                                    提交
-                                </button>
-                            </div>
-                        </form>
-                    </div>
                 </div>
 
 
