@@ -20,13 +20,12 @@ import java.util.Map;
 public class DataAutoImporter {
 
     private String mysqlDriver = "com.mysql.jdbc.Driver";
-    private String URL = "jdbc:mysql://10.39.32.45:31530/sydn_reform";
-    private String USER_NAME = "root";
-    private String PASSWORD ="m+1234";
-    private Connection conn = null;
+    private static String URL = "jdbc:mysql://10.39.32.45:31530/sydn_reform";
+    private static String USER_NAME = "root";
+    private static String PASSWORD ="m+1234";
 
-    private static String DATA_TYPE = " VARCHAR ";
-    private static int DATA_TYPE_SIZE = 50;
+    public static String DATA_TYPE = " VARCHAR ";
+    public static int DATA_TYPE_SIZE = 50;
 
     public static void main(String[] args) throws Exception {
 
@@ -51,7 +50,7 @@ public class DataAutoImporter {
 //        String tableSql = "create table dataAutoImporter (username varchar(50) not null primary key,"
 //                + "password varchar(20) not null ); ";
         DataAutoImporter dataAutoImporter = new DataAutoImporter();
-        Connection conn = dataAutoImporter.getConn();
+        Connection conn = dataAutoImporter.getConn(URL, USER_NAME, PASSWORD);
         //创建表
         dataAutoImporter.execute(conn, tableSql);
         //存数据
@@ -75,15 +74,16 @@ public class DataAutoImporter {
      * 获取链接
      * @return
      */
-    public Connection getConn() {
+    public Connection getConn(String url, String userName, String password) {
 
         try {
             Class.forName(mysqlDriver);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+        Connection conn = null;
         try {
-            conn = DriverManager.getConnection(URL, USER_NAME, PASSWORD);
+            conn = DriverManager.getConnection(url, userName, password);
         } catch (SQLException e1) {
             e1.printStackTrace();
         }

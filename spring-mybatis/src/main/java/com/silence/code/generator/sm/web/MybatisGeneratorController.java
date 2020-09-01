@@ -65,8 +65,10 @@ public class MybatisGeneratorController {
             String path = request.getRealPath("") + File.separator + "output";
             File directory = new File(path);
             File[] files = directory.listFiles();
-            for (File file: files) {
-                file.delete();
+            if (files != null) {
+                for (File file : files) {
+                    file.delete();
+                }
             }
             sqlParser.velocityAll(path);
             String[] fileArray = directory.list();
