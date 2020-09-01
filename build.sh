@@ -33,13 +33,13 @@ docker build -f ./Dockerfile -t ${tag_name} .
 #docker push hub.c.163.com/keysilence/store/docker/${project_name}:1.0.0
 
 
-base_url=10.19.248.200:30100
+base_url=registry.enncloud.cn
 
-docker_url=${base_url}/g_laikang/${project_name}:1.0.2
+docker_url=${base_url}/lk-dn-service.op.laikang.com/${project_name}:1.0.3
 
 docker tag ${tag_name} ${docker_url}
 
-docker login -u ggov -p !qaz2wsX ${base_url}
+docker login -u chenmo -p cm13811666786 ${base_url};
 
 docker push ${docker_url}
 
