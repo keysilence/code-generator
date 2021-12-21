@@ -1,0 +1,19 @@
+package ${class.packageName}.domain;
+
+/**
+*
+*/
+public class ${class.className} {
+
+    #foreach($column in $table.columns)
+    additionalLogicList = new ArrayList<>();
+    #foreach($field in $column.fields)
+    additionalLogic = new AdditionalLogicModel("$field.code");
+        additionalLogicList.add(additionalLogic);
+    #end
+    additionalLogicMap.put(this.buildAdditionalLogicKey("$column.name","$column.sex", "$column.mobile"), additionalLogicList);
+
+    #end
+
+
+}

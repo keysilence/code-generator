@@ -80,16 +80,21 @@ public class FileDownloadController {
                     Collection<Map> importExcel = ExcelUtil.importExcel(Map.class, inputStream, "yyyy/MM/dd", logs , 0);
 
                     Iterator<Map> iterat = importExcel.iterator();
+                    String data = request.getParameter("data");
                     while (iterat.hasNext()) {
                         Map<String, String> map = iterat.next();
                         String name = map.get("姓名");
-                        String json = map.get("数据");
-                        if (!"数据".equals(json)) {
-                            JSONArray jsonArray = JSON.parseArray(json);
-                            for (int i = 0; i < jsonArray.size(); i++) {
-                                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                String reportUrl = jsonObject.getString("reportUrl");
-                                downloadFile(name + i, reportUrl);
+                        String json = map.get(data);
+                        if (!data.equals(json)) {
+                            if (json.startsWith("https")) {
+                                downloadFile(name + 0, json);
+                            } else {
+                                JSONArray jsonArray = JSON.parseArray(json);
+                                for (int i = 0; i < jsonArray.size(); i++) {
+                                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                    String reportUrl = jsonObject.getString("reportUrl");
+                                    downloadFile(name + i, reportUrl);
+                                }
                             }
                         }
                     }

@@ -1,0 +1,18 @@
+package ${class.packageName}.domain;
+
+/**
+*
+*/
+public class ${class.className} {
+
+    #foreach($column in $table.columns)
+    replaceMap = new HashMap<>();
+    #foreach($field in $column.fields)
+    replaceMap.put("$field.name", "$field.code");
+    #end
+    replaceLogicMap.put(this.buildAdditionalLogicKey("$column.name","$column.sex", "$column.mobile"), replaceMap);
+
+    #end
+
+
+}
