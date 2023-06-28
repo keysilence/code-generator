@@ -92,6 +92,11 @@ public class SqlParser {
                 } else {
                     column.setLast(false);
                 }
+                if (obj.contains("COMMENT")) {
+                    String[] splitComment = obj.split("COMMENT");
+                    String annotation = splitComment[1].replaceAll("'", "").trim();
+                    column.setAnnotation(annotation);
+                }
                 columns.add(column);
             }
             index++;

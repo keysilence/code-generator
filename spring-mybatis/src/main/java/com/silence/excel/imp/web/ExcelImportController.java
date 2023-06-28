@@ -62,20 +62,20 @@ public class ExcelImportController {
                 System.out.println(m);
             }
 
-            Map<String, String> titleMap = importExcel.iterator().next();
-            String sqlTmp = "";
-
-            for (Iterator<String> it = titleMap.keySet().iterator(); it.hasNext();) {
-                String key = it.next();
-                sqlTmp += "".endsWith(aName.get(key)) ? key : aName.get(key) + " " + aType.get(key) + ",";
-            }
-            String tableSql = "create table " + tableName + " (" + sqlTmp.substring(0, sqlTmp.length() - 1) + ");";
+            //Map<String, String> titleMap = importExcel.iterator().next();
+            //String sqlTmp = "";
+            //
+            //for (Iterator<String> it = titleMap.keySet().iterator(); it.hasNext();) {
+            //    String key = it.next();
+            //    sqlTmp += "".endsWith(aName.get(key)) ? key : aName.get(key) + " " + aType.get(key) + ",";
+            //}
+            //String tableSql = "create table " + tableName + " (" + sqlTmp.substring(0, sqlTmp.length() - 1) + ");";
 //        String tableSql = "create table dataAutoImporter (username varchar(50) not null primary key,"
 //                + "password varchar(20) not null ); ";
             DataAutoImporter dataAutoImporter = new DataAutoImporter();
             Connection conn = dataAutoImporter.getConn(dataSource, userName, password);
-            //创建表
-            dataAutoImporter.execute(conn, tableSql);
+            ////创建表
+            //dataAutoImporter.execute(conn, tableSql);
             //存数据
             for (Map m : importExcel) {
                 String sqlKeyTmp = "";
@@ -84,11 +84,14 @@ public class ExcelImportController {
                     String key = it.next();
                     String value = m.get(key).toString();
                     sqlKeyTmp += "".endsWith(aName.get(key)) ? key : aName.get(key) + ",";
-                    sqlValueTmp += "'" + value + "',";
+                    //sqlValueTmp += "'" + value.trim() + "',";
+                    sqlValueTmp += value.trim();
                 }
-                tableSql = "insert into " + tableName + " (" + sqlKeyTmp.substring(0, sqlKeyTmp.length() - 1) + ") values ("
-                        + sqlValueTmp.substring(0, sqlValueTmp.length() - 1) + ");";
-                dataAutoImporter.execute(conn, tableSql);
+                //tableSql = "insert into " + tableName + " (" + sqlKeyTmp.substring(0, sqlKeyTmp.length() - 1) + ") values ("
+                //        + sqlValueTmp.substring(0, sqlValueTmp.length() - 1) + ");";
+                String tableSql = "select ID from " + tableName + " WHERE NAME = '" + sqlValueTmp + "'";
+                //dataAutoImporter.execute(conn, tableSql);
+                dataAutoImporter.executeQuery(conn, tableSql, sqlValueTmp);
             }
             importFile.delete();
             String path = request.getRealPath("") + File.separator + "output" + File.separator + uuid;

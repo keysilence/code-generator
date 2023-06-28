@@ -41,7 +41,7 @@
                 #foreach(${item} in $!{table.columns})
                 <div class="form-group">
                     <label class="col-sm-3 control-label no-padding-right">${item.name}：</label>
-                    <div class="col-sm-9"><input type="text" name="annotation" class="col-xs-10 col-sm-5" value=""></div>
+                    <div class="col-sm-9"><input type="text" name="annotation" class="col-xs-10 col-sm-5" value="${item.annotation}"></div>
                 </div>
                 #end
 

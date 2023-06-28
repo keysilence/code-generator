@@ -6,10 +6,7 @@ import com.sargeraswang.util.ExcelUtil.ExcelUtil;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
@@ -112,4 +109,46 @@ public class DataAutoImporter {
 
     }
 
+    /**
+     * 执行SQL
+     * @param conn
+     * @param sql
+     */
+    public void executeQuery(Connection conn, String sql, String column) {
+
+        try {
+            Class.forName(mysqlDriver);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        Statement smt = null;
+        ResultSet resultSet = null;
+        try {
+            smt = conn.createStatement();
+            resultSet = smt.executeQuery(sql);
+            if (resultSet.next()) {
+                System.out.println("有");
+            } else {
+                System.out.println("无");
+            }
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+        } finally {
+            if (smt != null) {
+                try {
+                    smt.close();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            }
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
+
+    }
 }
