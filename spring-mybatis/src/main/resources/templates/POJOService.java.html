@@ -9,12 +9,32 @@ public interface ${class.className}Service {
 
     public Page<${class.className}> query${class.className}Page(Integer currentPage, Integer pageSize, Map<String, Object> search);
 
+    /**
+    * 根据主键查询${class.className}信息
+    * @param id
+    * @return
+    */
     public ${class.className} query${class.className}ById(Long id);
 
+    /**
+    * 根据传入参数，查询${class.className}信息列表
+    * @param params
+    * @return
+    */
     public List<${class.className}> query${class.className}(Map<String, Object> params);
 
+    /**
+    * 删除${class.className}信息
+    * @param params
+    * @return
+    */
     public long delete${class.className}(Long id);
 
+    /**
+    * 保存${class.className}信息
+    * @param sDepartmentExamDetail
+    * @return
+    */
     public long save${class.className}(${class.className} ${class.classNameLower});
 
 }
