@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    #parse("common/meta.html")
+</head>
+<body class="no-skin">
+
+#parse("common/header.html")
+
+<div class="main-container ace-save-state" id="main-container">
+    <script type="text/javascript">
+        try{ace.settings.loadState('main-container')}catch(e){}
+    </script>
+
+    #parse("common/left_menu.html")
+
+    <div class="main-content">
+        <div class="main-content-inner">
+
+            <div class="page-content">
+                <div class="page-header">
+                    <h1>
+                        核桃记忆
+                    </h1>
+                </div>
+
+                <div class="row">
+
+                    <div class="modal-header">
+                        <h3 class="smaller lighter blue no-margin"></h3>
+                    </div>
+
+                    <div class="modal-header">
+                        <h3 class="smaller lighter blue no-margin">核桃查询</h3>
+                    </div>
+
+                    <div class="modal-body">
+                        <form class="form-horizontal" action="/admin/ht/search" id="uploadForm" role="form" enctype="multipart/form-data" method="post">
+
+                            <div class="modal-footer" style="background-color: white">
+                                <div class="form-group">
+                                    <div class="col-sm-2">
+                                        <label class="col-sm-3 control-label no-padding-right">品种：</label>
+                                        <div class="col-sm-1"><input type="text" name="breed" class="col-xs-10 col-sm-5" value=""></div>
+                                    </div>
+                                </div>
+                                <button id="btnCommit" class="btn btn-sm btn-primary" type="button" onclick="document.getElementById('uploadForm').submit()">
+                                    <i class="ace-icon fa fa-check"></i>
+                                    提交
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+    #parse("common/footer.html")
+
+    <script type="text/javascript">
+
+        <!--$(function () {-->
+            <!--$('#btnCommit').click(function () {-->
+                <!--$.ajax({-->
+                    <!--url:"/admin/excel/import/upload",-->
+                    <!--type:"Post",-->
+                    <!--data:$('#uploadForm').serialize(),-->
+                    <!--enctype:"multipart/form-data",-->
+                    <!--success:function (data) {-->
+                        <!--console.log("success");-->
+                        <!--alert(data);//将返回信息填入页面-->
+                    <!--},-->
+                    <!--error:function (err) {-->
+                        <!--console.log("error!!!!");-->
+                    <!--}-->
+                <!--});-->
+
+            <!--});-->
+        <!--});-->
+
+    </script>
+</div><!-- /.main-container -->
+
+</body>
+</html>
