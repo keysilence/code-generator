@@ -35,7 +35,7 @@ docker build -f ./Dockerfile -t ${tag_name} .
 
 base_url=registry.enncloud.cn
 
-docker_url=${base_url}/lk-dn-service.op.laikang.com/${project_name}:1.0.4
+docker_url=${base_url}/lk-dn-service.op.laikang.com/${project_name}:1.0.5
 
 docker tag ${tag_name} ${docker_url}
 
